@@ -1,4 +1,4 @@
-# microbit-module: movementlibrary@1.0.1
+# microbit-module: movementlibrary@1.0.2
 from cyberbot import *
 import log
 
@@ -14,6 +14,21 @@ pin18TurnSpeedFinal = 75
 pin19TurnSpeedFinal = 75
 
 #Allows chaning global variables
+
+def accessSPI():
+    return secondsPerInch
+
+def accessSPD():
+    return secondsPerDegree
+
+def modifySPI(value):
+    global secondsPerInch
+    secondsPerInch = value
+
+def modifySPD(value):
+    global secondsPerDegree
+    secondsPerDegree = value
+
 def access18F():
     return pin18ForwardSpeedFinal
     
@@ -65,7 +80,9 @@ class Movement:
         pin18ReverseSpeed,
         pin19ReverseSpeed,
         pin18TurnSpeed,
-        pin19TurnSpeed
+        pin19TurnSpeed,
+        SPI=accessSPI(),
+        SPD=accessSPD()
     ):
         modify18F(pin18ForwardSpeed)
         modify18R(pin18ReverseSpeed)
@@ -73,6 +90,10 @@ class Movement:
         modify19F(pin19ForwardSpeed)
         modify19R(pin19ReverseSpeed)
         modify19T(pin19TurnSpeed)
+        if SPI != accessSPI():
+            modifySPI(SPI)
+        if SPD != accessSPD():
+            modifySPD(SPD)
     
     def forward(self, distance, speed):
         log.add({"Forward Active": distance})
