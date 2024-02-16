@@ -1,6 +1,7 @@
-# microbit-module: movementlibrary@1.0.2
+# microbit-module: movementlibrary@1.1
 from cyberbot import *
 import log
+import math
 
 secondsPerInch = 0.21739130434
 secondsPerDegree = 0.005
@@ -96,66 +97,72 @@ class Movement:
             modifySPD(SPD)
     
     def forward(self, distance, speed):
+        distance /= speed
         log.add({"Forward Active": distance})
         timer = 0
         bot(18).servo_speed(access18F() * speed)
         bot(19).servo_speed(-access19F() * speed)
         while timer < ((((distance*secondsPerInch)-secondsPerInch)*1000)):
-            sleep(50)
-            bot(20).write_digital(1)
-            sleep(50)
-            bot(20).write_digital(0)
-            timer = timer + 100
+            sleep(1)
+            timer += 1
+            if math.fmod(timer, 50 * speed) == 0:
+                bot(20).write_digital(1)
+            if math.fmod(timer, 100 * speed) == 0:
+                bot(20).write_digital(0)
+        bot(20).write_digital(0)
+        bot(21).write_digital(0)
         bot(18).servo_speed(None)
         bot(19).servo_speed(None)
     
     def backward(self, distance, speed):
+        distance /= speed
         log.add({"Backward Active": distance})
         timer = 0
         bot(18).servo_speed(-access18R() * speed)
         bot(19).servo_speed(access19R() * speed)
         while timer < ((((distance*secondsPerInch)-secondsPerInch)*1000)):
-            sleep(100)
-            bot(21).write_digital(1)
-            timer = timer + 100
-            if timer > (((distance*secondsPerInch)-secondsPerInch)*1000):
-                    bot(20).write_digital(0)
-                    bot(21).write_digital(0)
-                    break
-            sleep(100)
-            bot(21).write_digital(0)
-            timer = timer + 200
+            sleep(1)
+            timer += 1
+            if math.fmod(timer, 50 * speed) == 0:
+                bot(20).write_digital(1)
+            if math.fmod(timer, 100 * speed) == 0:
+                bot(20).write_digital(0)
+        bot(20).write_digital(0)
+        bot(21).write_digital(0)
         bot(18).servo_speed(None)
         bot(19).servo_speed(None)
     
     def turn(self, degrees, direction, speed):
+        degrees /= speed
         timer = 0
         if direction is "Right":
             log.add({"Right Turn Active": degrees})
             bot(18).servo_speed(access18T() * speed)
             bot(19).servo_speed(access19T() * speed)
             while timer < (((degrees*secondsPerDegree)-secondsPerDegree)*1000):
-                sleep(10)
-                bot(20).write_digital(1)
-                bot(21).write_digital(1)
-                sleep(10)
-                bot(20).write_digital(0)
-                bot(21).write_digital(0)
-                timer = timer + 20
+                sleep(1)
+                timer += 1
+                if math.fmod(timer, 50 * speed) == 0:
+                    bot(20).write_digital(1)
+                    bot(21).write_digital(1)
+                if math.fmod(timer, 100 * speed) == 0:
+                    bot(20).write_digital(0)
+                    bot(21).write_digital(0)
         if direction is "Left":
             log.add({"Left Turn Active": degrees})
             bot(18).servo_speed(-access18T() * speed)
             bot(19).servo_speed(-access19T() * speed)
             while timer < (((degrees*secondsPerDegree)-secondsPerDegree)*1000):
-                sleep(10)
-                bot(20).write_digital(1)
-                bot(21).write_digital(0)
-                sleep(10)
-                bot(20).write_digital(0)
-                bot(21).write_digital(1)
-                timer = timer + 20
-                
+                sleep(1)
+                timer += 1
+                if math.fmod(timer, 50 * speed) == 0:
+                    bot(20).write_digital(1)
+                    bot(21).write_digital(0)
+                if math.fmod(timer, 100 * speed) == 0:
+                    bot(20).write_digital(0)
+                    bot(21).write_digital(1)
         log.add({"timer": timer})
+        bot(20).write_digital(0)
         bot(21).write_digital(0)
         bot(18).servo_speed(None)
         bot(19).servo_speed(None)
