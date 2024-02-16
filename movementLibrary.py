@@ -1,4 +1,4 @@
-# microbit-module: movementlibrary@1.1
+# microbit-module: movementlibraryByCohenGeorge@1.1
 from cyberbot import *
 import log
 import math
