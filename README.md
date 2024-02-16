@@ -1,3 +1,8 @@
+**NOTE: BETA BRANCH MAY BE UNSTABLE, USE AT YOUR OWN RISK**
+
+
+
+
 **Instalation**
 
 Download the most recent version from the releases tab on the right, press open on [Micro Python](https://python.microbit.org/v/3/) and press the "movementLibrary.py" file.
