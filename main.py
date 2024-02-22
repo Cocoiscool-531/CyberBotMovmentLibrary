@@ -1,19 +1,26 @@
 from movement import *
+from cyberbot import *
+from tuning import *
 
-m = Movement(
+# TUNING MODE FOR CYBERBOT
+
+# Values below: 
+# Forward Speed for Pin 18
+# Forward Speed for Pin 19
+# Reverse Speed for Pin 18
+# Reverse Speed for Pin 19
+# Turn Speed for Pin 18
+# Turn Speed for Pin 19
+# SPI
+# SPD
+
+m = TuningModes(
     64,
     75,
     75,
     75,
     75,
     75,
+    #SPI, leave blank for default
+    #SPD, leave blank for default
 )
-
-#Distance Inches, speed(0-1)
-m.forward(4, 0.5)
-#Degrees, Dirrection ("Left" or "Right"), speed(0-1)
-m.turn(90, "Left", 0.5)
-#Distance Inches, speed(0-1)
-m.backward(9, 1)
-#Degrees, Dirrection ("Left" or "Right"), speed(0-1)
-m.turn(180, "Right", 0.5)
