@@ -14,7 +14,7 @@ pin19ReverseSpeedFinal = 75
 pin18TurnSpeedFinal = 75
 pin19TurnSpeedFinal = 75
 
-#Allows chaning global variables
+#Allows changing global variables
 
 def accessSPI():
     return secondsPerInch
@@ -105,10 +105,10 @@ class Movement:
         while timer < ((((distance*secondsPerInch)-secondsPerInch)*1000)):
             sleep(1)
             timer += 1
-            if math.fmod(timer, 50 * speed) == 0:
-                bot(20).write_digital(1)
             if math.fmod(timer, 100 * speed) == 0:
                 bot(20).write_digital(0)
+            elif math.fmod(timer, 50 * speed) == 0:
+                bot(20).write_digital(1)
         bot(20).write_digital(0)
         bot(21).write_digital(0)
         bot(18).servo_speed(None)
@@ -123,10 +123,10 @@ class Movement:
         while timer < ((((distance*secondsPerInch)-secondsPerInch)*1000)):
             sleep(1)
             timer += 1
-            if math.fmod(timer, 50 * speed) == 0:
-                bot(20).write_digital(1)
             if math.fmod(timer, 100 * speed) == 0:
                 bot(20).write_digital(0)
+            elif math.fmod(timer, 50 * speed) == 0:
+                bot(20).write_digital(1)
         bot(20).write_digital(0)
         bot(21).write_digital(0)
         bot(18).servo_speed(None)
@@ -142,12 +142,12 @@ class Movement:
             while timer < (((degrees*secondsPerDegree)-secondsPerDegree)*1000):
                 sleep(1)
                 timer += 1
-                if math.fmod(timer, 50 * speed) == 0:
-                    bot(20).write_digital(1)
-                    bot(21).write_digital(1)
                 if math.fmod(timer, 100 * speed) == 0:
                     bot(20).write_digital(0)
                     bot(21).write_digital(0)
+                elif math.fmod(timer, 50 * speed) == 0:
+                    bot(20).write_digital(1)
+                    bot(21).write_digital(1)
         if direction is "Left":
             log.add({"Left Turn Active": degrees})
             bot(18).servo_speed(-access18T() * speed)
@@ -155,12 +155,12 @@ class Movement:
             while timer < (((degrees*secondsPerDegree)-secondsPerDegree)*1000):
                 sleep(1)
                 timer += 1
-                if math.fmod(timer, 50 * speed) == 0:
-                    bot(20).write_digital(1)
-                    bot(21).write_digital(0)
                 if math.fmod(timer, 100 * speed) == 0:
                     bot(20).write_digital(0)
                     bot(21).write_digital(1)
+                elif math.fmod(timer, 50 * speed) == 0:
+                    bot(20).write_digital(1)
+                    bot(21).write_digital(0)
         log.add({"timer": timer})
         bot(20).write_digital(0)
         bot(21).write_digital(0)
