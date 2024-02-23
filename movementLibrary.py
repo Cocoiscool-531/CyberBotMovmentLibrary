@@ -1,7 +1,8 @@
 # microbit-module: Movement Library By Cohen George@2.0
 from cyberbot import *
-import log
-import math
+import log,math
+
+speeds = []
 
 distancePerDegree = 0
 secondsPerDistance = 0
@@ -21,15 +22,15 @@ def changeUnit(unit):
     global distancePerDegree
     global distancePerSecond
     global secondsPerDistance
-    if(unit == "mm" or unit == "Mm" or unit == "Mm" or unit == "MM"):
+    if(unit == "mm"):
         distancePerDegree = mmPerDegree
         secondsPerDistance = secondsPerMM
         distancePerSecond = mmPerSecond
-    elif(unit == "in" or unit == "In" or unit == "IN" or unit == "iN" or unit == "Inches" or unit == "inches" or unit == "INCHES" or unit == "Inch" or unit == "INCH" or unit == "inch"):
+    elif unit == "in":
         distancePerDegree = inPerDegree
         secondsPerDistance = secondsPerIn
         distancePerSecond = inPerSecond
-
+    
 def accessBotNum():
     return botNum
 
@@ -141,7 +142,7 @@ class Bot12:
 def forwardVals():
     botNum = accessBotNum()
     botNumber = str(botNum)
-    speeds = []
+    global speeds
     for i in range(18, 19):
         toRun = ("speeds.append(Bot" + botNumber + ".pin" + str(i) + "ForwardSpeed)")
         eval(toRun)
@@ -150,7 +151,7 @@ def forwardVals():
 def reverseVals():
     global botNum
     botNumber = str(botNum)
-    speeds = []
+    global speeds
     for i in range(18, 19):
         toRun = ("speeds.append(Bot" + botNumber +".pin" + str(i) + "ReverseSpeed)")
         eval(toRun)
@@ -159,7 +160,7 @@ def reverseVals():
 def turnVals():
     global botNum
     botNumber = str(botNum)
-    speeds = []
+    global speeds
     for i in range(18, 19):
         toRun = ("speeds.append(Bot" + botNumber +".pin" + str(i) + "TurnSpeed)")
         eval(toRun)
