@@ -155,7 +155,7 @@ def spdVal():
 def spmVal():
     return secondsPerMM
 def distanceFormula(distance):
-    return ((distance*spiVal())-spiVal())*1000
+    return ((distance*spmVal())-spmVal())*1000
 
 def degreeFormula(degrees):
     return ((degrees*spdVal())-spdVal())*1000
