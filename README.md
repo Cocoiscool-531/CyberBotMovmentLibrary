@@ -15,7 +15,8 @@ from movementLibrary import *
 
 Then create a new object
 ```python 
-m = Movement()```
+m = Movement()
+```
 
 The Movement class takes 2 parameters, the bot number, and the unit. For bot number, input an int between 1 and 12. 
 After that put either "in" or "mm" for selecting a unit. An example main.py is shown below.
