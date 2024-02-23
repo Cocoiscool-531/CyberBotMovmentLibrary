@@ -1,19 +1,38 @@
-from movement import *
+from movementLibrary import *
+from cyberbot import *
 
-m = Movement(
-    64,
-    75,
-    75,
-    75,
-    75,
-    75,
-)
+m = Movement(4,"mm")
+i = Movement(4,"in")
 
-#Distance Inches, speed(0-1)
-m.forward(4, 0.5)
-#Degrees, Dirrection ("Left" or "Right"), speed(0-1)
-m.turn(90, "Left", 0.5)
-#Distance Inches, speed(0-1)
-m.backward(9, 1)
-#Degrees, Dirrection ("Left" or "Right"), speed(0-1)
-m.turn(180, "Right", 0.5)
+# Movements in mm:
+
+# Distance, Speed
+m.forward(5, 1)
+# Angle, Direction, Speed
+m.turn(90, "right", .5)
+# Distance, Speed
+m.backward(10, 1)
+# Angle, Direction, Speed
+m.turn(90, "left", 1)
+# Distance, Speed
+m.forward(10, 1)
+# Angle, Direction, Speed
+m.turn(90, "right", 1)
+# Distance, Speed
+m.forward(10, 1)
+# Angle, Direction, Speed
+m.turn(90, "left", 1)
+# Distance, Speed
+m.backward(15, 1)
+
+
+# Same as above, but in inches
+i.forward(5, 1)
+i.turn(90, "right", .5)
+i.backward(10, 1)
+i.turn(90, "left", 1)
+i.forward(10, 1)
+i.turn(90, "right", 1)
+i.forward(10, 1)
+i.turn(90, "left", 1)
+i.backward(15, 1)
