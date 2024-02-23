@@ -1,7 +1,15 @@
-# microbit-module: movementlibrary@2.0
+# microbit-module: Movement Library By Cohen George@2.0
 from cyberbot import *
 import log
 import math
+
+secondsPerInch = 0.14267772545
+inchesPerSecond = 7.008802507992127
+
+secondsPerDegree = 0.005
+
+secondsPerMM = 0.00561723328
+mmPerSecond =  178.023583703
 
 botNum = 1
 
@@ -13,8 +21,7 @@ def modifyBotNum(s):
     botNum = s
 
 class Bot1:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
+    rpm = 50
     pin18ForwardSpeed = 67
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 67
@@ -24,8 +31,6 @@ class Bot1:
 
 class Bot2:
     # No Sticky
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 75
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 75
@@ -34,8 +39,6 @@ class Bot2:
     pin19TurnSpeed = 75
 
 class Bot3:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 74.25
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 74.25
@@ -44,8 +47,6 @@ class Bot3:
     pin19TurnSpeed = 75
 
 class Bot4:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 67
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 67
@@ -54,8 +55,6 @@ class Bot4:
     pin19TurnSpeed = 75
 
 class Bot5:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 75
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 75
@@ -64,8 +63,6 @@ class Bot5:
     pin19TurnSpeed = 75
 
 class Bot6:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 70.2
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 70.2
@@ -75,8 +72,6 @@ class Bot6:
 
 class Bot7:
     # No Sticky
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 75
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 75
@@ -85,8 +80,6 @@ class Bot7:
     pin19TurnSpeed = 75
 
 class Bot8:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 72.115
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 72.115
@@ -95,8 +88,6 @@ class Bot8:
     pin19TurnSpeed = 75
 
 class Bot9:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 67
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 67
@@ -105,13 +96,29 @@ class Bot9:
     pin19TurnSpeed = 75
 
 class Bot10:
-    secondsPerInch = 0.21739130434
-    secondsPerDegree = 0.005
     pin18ForwardSpeed = 65
     pin19ForwardSpeed = 75
     pin18ReverseSpeed = 65
     pin19ReverseSpeed = 75
     pin18TurnSpeed = 65
+    pin19TurnSpeed = 75
+
+class Bot11:
+    # Out Of Service: Values Untested, Unchanged
+    pin18ForwardSpeed = 75
+    pin19ForwardSpeed = 75
+    pin18ReverseSpeed = 75
+    pin19ReverseSpeed = 75
+    pin18TurnSpeed = 75
+    pin19TurnSpeed = 75
+
+class Bot12:
+    # Out Of Service: Values Untested, Unchanged
+    pin18ForwardSpeed = 75
+    pin19ForwardSpeed = 75
+    pin18ReverseSpeed = 75
+    pin19ReverseSpeed = 75
+    pin18TurnSpeed = 75
     pin19TurnSpeed = 75
 
 def forwardVals():
@@ -140,22 +147,13 @@ def turnVals():
         eval(toRun)
     return speeds
 def spiVal():
-    global botNum
-    botNumber = str(botNum)
-    spd= []
-    for i in range(18, 19):
-        toRun = ("spi.append(Bot" + botNumber +".pin" + str(i) + "secondsPerInch)")
-        eval(toRun)
-    return spd
+    return secondsPerInch
+def ips():
+    return inchesPerSecond
 def spdVal():
-    global botNum
-    botNumber = str(botNum)
-    spi = []
-    for i in range(18, 19):
-        toRun = ("spd.append(Bot" + botNumber +".pin" + str(i) + "secondsPerDegree)")
-        eval(toRun)
-    return spi
-
+    return secondsPerDegree
+def spmVal():
+    return secondsPerMM
 def distanceFormula(distance):
     return ((distance*spiVal())-spiVal())*1000
 
