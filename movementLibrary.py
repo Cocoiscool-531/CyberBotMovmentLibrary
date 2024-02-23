@@ -3,11 +3,11 @@ from cyberbot import *
 import log
 import math
 
+inPerDegree = 0.00386514844
 secondsPerInch = 0.14267772545
 inchesPerSecond = 7.008802507992127
 
-secondsPerDegree = 0.005
-
+mmPerDegree = 0.09817477042
 secondsPerMM = 0.00561723328
 mmPerSecond =  178.023583703
 
@@ -138,6 +138,7 @@ def reverseVals():
         toRun = ("speeds.append(Bot" + botNumber +".pin" + str(i) + "ReverseSpeed)")
         eval(toRun)
     return speeds
+    
 def turnVals():
     global botNum
     botNumber = str(botNum)
@@ -146,19 +147,21 @@ def turnVals():
         toRun = ("speeds.append(Bot" + botNumber +".pin" + str(i) + "TurnSpeed)")
         eval(toRun)
     return speeds
+    
 def spiVal():
     return secondsPerInch
+    
 def ips():
     return inchesPerSecond
-def spdVal():
-    return secondsPerDegree
+    
 def spmVal():
     return secondsPerMM
+    
 def distanceFormula(distance):
     return ((distance*spmVal())-spmVal())*1000
 
-def degreeFormula(degrees):
-    return ((degrees*spdVal())-spdVal())*1000
+def degreesToDistance(degrees):
+    return degrees * mmPerDegree
 
 class Movement:
     
@@ -205,13 +208,14 @@ class Movement:
         bot(19).servo_speed(None)
     
     def turn(self, degrees, direction, speed):
-        degrees /= speed
+        distance = degreesToDistance(degrees)
+        distance /= speed
         timer = 0
         if direction is "Right":
             log.add({"Right Turn Active": degrees})
             bot(18).servo_speed(turnVals()[0] * speed)
             bot(19).servo_speed(turnVals()[1] * speed)
-            while timer < degreeFormula(degrees):
+            while timer < distanceFormula(distance):
                 sleep(1)
                 timer += 1
                 if math.fmod(timer, 100 * speed) == 0:
@@ -223,7 +227,7 @@ class Movement:
         if direction is "Left":
             bot(18).servo_speed(-turnVals()[0] * speed)
             bot(19).servo_speed(-turnVals()[1] * speed)
-            while timer < degreeFormula(degrees):
+            while timer < distanceFormula(distance):
                 sleep(1)
                 timer += 1
                 if math.fmod(timer, 100 * speed) == 0:
@@ -232,7 +236,6 @@ class Movement:
                 elif math.fmod(timer, 50 * speed) == 0:
                     bot(20).write_digital(1)
                     bot(21).write_digital(0)
-        log.add({"timer": timer})
         bot(20).write_digital(0)
         bot(21).write_digital(0)
         bot(18).servo_speed(None)
