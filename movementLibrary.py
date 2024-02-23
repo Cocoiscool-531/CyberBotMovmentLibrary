@@ -3,15 +3,32 @@ from cyberbot import *
 import log
 import math
 
+distancePerDegree = 0
+secondsPerDistance = 0
+distancePerSecond = 0
+
 inPerDegree = 0.00386514844
-secondsPerInch = 0.14267772545
-inchesPerSecond = 7.008802507992127
+secondsPerIn = 0.14267772545
+inPerSecond = 7.008802507992127
 
 mmPerDegree = 0.09817477042
 secondsPerMM = 0.00561723328
 mmPerSecond =  178.023583703
 
 botNum = 1
+
+def changeUnit(unit):
+    global distancePerDegree
+    global distancePerSecond
+    global secondsPerDistance
+    if(unit == "mm" or unit == "Mm" or unit == "Mm" or unit == "MM"):
+        distancePerDegree = mmPerDegree
+        secondsPerDistance = secondsPerMM
+        distancePerSecond = mmPerSecond
+    elif(unit == "in" or unit == "In" or unit == "IN" or unit == "iN" or unit == "Inches" or unit == "inches" or unit == "INCHES" or unit == "Inch" or unit == "INCH" or unit == "inch"):
+        distancePerDegree = inPerDegree
+        secondsPerDistance = secondsPerIn
+        distancePerSecond = inPerSecond
 
 def accessBotNum():
     return botNum
@@ -147,29 +164,28 @@ def turnVals():
         toRun = ("speeds.append(Bot" + botNumber +".pin" + str(i) + "TurnSpeed)")
         eval(toRun)
     return speeds
+
+def spdVal():
+    return secondsPerDistance
     
-def spiVal():
-    return secondsPerInch
-    
-def ips():
-    return inchesPerSecond
-    
-def spmVal():
-    return secondsPerMM
-    
+def dpdVal():
+    return distancePerDegree
+
 def distanceFormula(distance):
-    return ((distance*spmVal())-spmVal())*1000
+    return ((distance*spdVal())-spdVal())*1000
 
 def degreesToDistance(degrees):
-    return degrees * mmPerDegree
+    return degrees * dpdVal()
 
 class Movement:
     
     def __init__(
         self,
-        botNum
+        botNum,
+        unit
     ):
         modifyBotNum(botNum)
+        changeUnit(unit)
     
     def forward(self, distance, speed):
         distance /= speed
